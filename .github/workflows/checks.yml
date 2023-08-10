@@ -1,12 +1,11 @@
-___
-
+---
 name: Checks
 
 on: [push]
 
-jobs: 
+jobs:
   test-lint:
-    name:Test and lint
+    name: Test and Lint
     runs-on: ubuntu-20.04
     steps:
       - name: Login to Docker Hub
@@ -14,10 +13,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test
-        run: docker-compose run --rm app sh -c "python manage.py test" 
-      - name:lint
-        run: docker-compose run --rm app sh =c "flake8"  
+        run: docker-compose run --rm app sh -c "python manage.py test"
+      - name: Lint
+        run: docker-compose run --rm app sh -c "flake8"
