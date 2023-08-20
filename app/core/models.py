@@ -28,6 +28,8 @@ class UserManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self.db)
         return user
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     """User in system"""
     email = models.EmailField(unique=True, max_length=255)
