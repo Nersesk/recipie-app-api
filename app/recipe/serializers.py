@@ -1,7 +1,7 @@
 """
 Serializers for recipie APIs
 """
-from core.models import Recipie, Tag
+from core.models import Recipie, Tag, Ingredient
 from rest_framework.serializers import ModelSerializer
 
 
@@ -14,6 +14,14 @@ class TagSerializer(ModelSerializer):
         read_only_fields = ['id', ]
 
 
+class IngredientSerializer(ModelSerializer):
+    """Serializer for Ingredient model"""
+    class Meta:
+        model = Ingredient
+        fields = ['id', 'name']
+        read_only_fields = ['id', ]
+
+
 class RecipeSerializer(ModelSerializer):
     """Serializer for recipies"""
     tags = TagSerializer(many=True, required=False)
@@ -22,6 +30,7 @@ class RecipeSerializer(ModelSerializer):
         model = Recipie
         fields = ('id', 'title', 'time_minutes', 'price', 'link', 'tags')
         read_only_fields = ('id',)
+
     def _get_or_create_tags(self, tags, recipie):
         """Handle getting or creating tags"""
         auth_user = self.context['request'].user
@@ -49,6 +58,8 @@ class RecipeSerializer(ModelSerializer):
             setattr(instance, attr, value)
         instance.save()
         return instance
+
+
 class RecipieDetailSerializer(RecipeSerializer):
     """Serializer for recipe details view."""
 
